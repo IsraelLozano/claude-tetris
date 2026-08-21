@@ -19,6 +19,24 @@ body {
   position: relative;
 }
 
+.game-title {
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-color: #ff6ec7;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+  letter-spacing: 6px;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #7aa2f7, #ff6ec7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px rgba(122, 162, 247, 0.35);
+}
+
 .game-container {
   display: flex;
   gap: 20px;
