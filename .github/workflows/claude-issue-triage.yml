@@ -1,3 +1,6 @@
+# Se dispara al crear o editar un issue: usa Claude para etiquetarlo
+# automáticamente (bug, enhancement, question, etc.) y publicar un
+# comentario con diagnóstico y posible enfoque de solución, sin tocar código.
 name: Claude Issue Triage
 
 on:
