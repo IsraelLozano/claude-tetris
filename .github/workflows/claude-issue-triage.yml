@@ -1,0 +1,40 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Issue Triage
+        id: claude-triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: '--allowedTools "Bash(gh issue edit:*),Bash(gh issue comment:*),Read,Grep,Glob"'
+          prompt: |
+            Analizá el issue #${{ github.event.issue.number }} de este repositorio ("${{ github.event.issue.title }}").
+
+            1. Leé el título y la descripción del issue.
+            2. Asigná los labels que correspondan, eligiendo solo entre los existentes:
+               bug, enhancement, question, documentation, duplicate, invalid, wontfix, help wanted, good first issue.
+               Usá `gh issue edit ${{ github.event.issue.number }} --add-label "<label>"` (podés agregar más de uno).
+            3. Explorá el código del repositorio si hace falta para entender qué partes podrían estar involucradas.
+            4. Publicá un comentario en el issue con un diagnóstico general del problema usando
+               `gh issue comment ${{ github.event.issue.number }} --body "..."`, que incluya:
+               - Causa probable del problema.
+               - Componentes o archivos del código posiblemente afectados.
+               - Un enfoque sugerido para abordar la solución (sin implementarla todavía).
+
+            No modifiques código ni crees pull requests. Tu única salida es: labels asignados + comentario de diagnóstico.
