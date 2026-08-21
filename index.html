@@ -47,6 +47,12 @@
             <li><kbd>P</kbd> pausa</li>
           </ul>
         </div>
+
+        <div class="panel-section highscore-panel">
+          <span class="label">RECORDS</span>
+          <ol id="highscore-panel-list" class="highscore-list highscore-list-compact"></ol>
+          <button id="highscore-reset-btn" class="highscore-reset-btn" type="button">Resetear records</button>
+        </div>
       </aside>
     </div>
 
@@ -54,6 +60,13 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <p id="overlay-stats" class="highscore-stats"></p>
+        <div id="highscore-entry-form" class="highscore-entry-form hidden">
+          <label for="highscore-name-input" class="highscore-entry-label">¡Nuevo record! Ingresá tu nombre:</label>
+          <input id="highscore-name-input" class="highscore-name-input" type="text" maxlength="12" placeholder="Jugador" />
+          <button id="highscore-save-btn" class="highscore-save-btn" type="button">Guardar</button>
+        </div>
+        <ol id="highscore-overlay-list" class="highscore-list hidden"></ol>
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
