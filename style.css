@@ -109,6 +109,30 @@ body {
   transform: translateX(20px);
 }
 
+/* ---- Skin switch ---- */
+.skin-switch-wrapper {
+  position: absolute;
+  top: 26px;
+  right: 0;
+}
+
+#skin-select {
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  color: var(--kbd-color);
+  border-radius: 4px;
+  font-size: 11px;
+  padding: 3px 6px;
+  cursor: pointer;
+}
+
+/* ---- Skins ---- */
+[data-skin="neon"] {
+  --board-bg: #000000;
+  --board-border: #0a3a3a;
+  --grid-color: #06201f;
+}
+
 .game-title {
   text-align: center;
   text-transform: uppercase;
