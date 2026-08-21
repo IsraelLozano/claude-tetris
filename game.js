@@ -13,6 +13,11 @@ const COLORS = [
   '#e57373', // Z - red
   '#5c9bd8', // J - pale blue
   '#ffb74d', // L - orange
+  '#f06292', // + - pink
+  '#4db6ac', // U - teal
+  '#7986cb', // Y - indigo
+  '#ffd700', // single (1x1) - gold
+  '#d84315', // hollow 3x3 - red-orange
 ];
 
 const PIECES = [
@@ -24,7 +29,16 @@ const PIECES = [
   [[5,5,0],[0,5,5],[0,0,0]],                  // Z
   [[6,0,0],[6,6,6],[0,0,0]],                  // J
   [[0,0,7],[7,7,7],[0,0,0]],                  // L
+  [[0,8,0],[8,8,8],[0,8,0]],                  // + (pentomino)
+  [[9,0,9],[9,9,9]],                           // U (pentomino)
+  [[0,10],[10,10],[0,10],[0,10]],             // Y (pentomino)
+  [[11]],                                      // single (Tetris reward)
+  [[12,12,12],[12,0,12],[12,12,12]],          // hollow 3x3 (challenge)
 ];
+
+const SPECIAL_TYPES = [8, 9, 10, 12];
+const SINGLE_TYPE = 11;
+const SPECIAL_CHANCE = 0.1;
 
 const LINE_SCORES = [0, 100, 300, 500, 800];
 
@@ -65,10 +79,16 @@ function createBoard() {
   return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
 }
 
-function randomPiece() {
-  const type = Math.floor(Math.random() * 7) + 1;
+function makePiece(type) {
   const shape = PIECES[type].map(row => [...row]);
   return { type, shape, x: Math.floor(COLS / 2) - Math.floor(shape[0].length / 2), y: 0 };
+}
+
+function randomPiece() {
+  const type = Math.random() < SPECIAL_CHANCE
+    ? SPECIAL_TYPES[Math.floor(Math.random() * SPECIAL_TYPES.length)]
+    : Math.floor(Math.random() * 7) + 1;
+  return makePiece(type);
 }
 
 function collide(shape, ox, oy) {
@@ -127,6 +147,7 @@ function clearLines() {
     score += (LINE_SCORES[cleared] || 0) * level;
     level = Math.floor(lines / 10) + 1;
     dropInterval = Math.max(100, 1000 - (level - 1) * 90);
+    if (cleared === 4) next = makePiece(SINGLE_TYPE);
     updateHUD();
   }
 }
